@@ -28,7 +28,6 @@ for train in normalarray do
 end
 northbound = []
 for singletrain in fourtrains do
-  # p singletrain
     if singletrain.respond_to?(:trip)
       if singletrain.try(:trip).try(:trip_id).split("..")[1][0]  == "N"
         northbound << singletrain
@@ -39,5 +38,7 @@ for singletrain in fourtrains do
       end
     end
 end
+southbound = fourtrains.select {|train| !northbound.include?(train)}
+
 byebug
-asdasda
+sd
