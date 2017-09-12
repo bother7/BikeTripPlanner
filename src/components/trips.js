@@ -26,7 +26,7 @@ class Trips {
     event.preventDefault()
     const origin = this.tripInputOrigin.value
     const destination = this.tripInputDestination.value
-    this.adapter.createTrip(origin, destination)
+    this.adapter.createTrip({origin, destination})
     .then( (tripJSON) => this.trips.push(new Trip(tripJSON)) )
     .then(  this.render.bind(this) )
     .then( () => this.tripInputOrigin.value = '' )

@@ -12,7 +12,7 @@ class Api::V1::TripsController < ApplicationController
 
   private
   def trip_params
-    params.permit(:origin, :destination)
+    params.require(:body).permit(:origin, :destination)
   end
 
 

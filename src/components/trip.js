@@ -6,6 +6,6 @@ class Trip {
   }
 
   render() {
-    return `<li data-tripid='${this.id}' data-props='${JSON.stringify(this)}' class='trip-element'>origin - ${this.origin} destination - ${this.destination}<i data-action='delete-trip'>X</i></li>`
+    return `<li data-tripid='${this.id}' data-props='${JSON.stringify(this)}' class='trip-element'>origin - ${this.origin} destination - ${this.destination}<button data-action='delete-trip'>X</button></li>`
   }
 }

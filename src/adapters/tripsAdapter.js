@@ -18,16 +18,16 @@ class TripsAdapter {
     return fetch(deleteUrl, tripDeleteParams).then(response => response.json())
   }
 
-  createTrip(origin,destination) {
+  createTrip(body) {
     const tripCreateParams = {
       method: 'POST',
       headers: {
         'Content-Type':'application/json'
       },
-      // console.log(origin)
-      origin: JSON.stringify({origin}),
-      destination: JSON.stringify({destination})
+      body: JSON.stringify({body})
+      // , JSON.stringify({destination})
     }
+    console.log(tripCreateParams)
     return fetch(this.baseUrl, tripCreateParams).then(resp => resp.json())
   }
 
