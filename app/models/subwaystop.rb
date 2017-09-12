@@ -6,30 +6,20 @@ require 'byebug'
 
 data = Net::HTTP.get(URI.parse("http://datamine.mta.info/mta_esi.php?key=&feed_id=1"))
 feed = Transit_realtime::FeedMessage.decode(data)
-updatearray = []
-normalarray = []
-for entity in feed.entity do
-  if entity.field?(:trip_update)
-    updatearray << entity.trip_update
-  else
-    normalarray << entity
-  end
-end
 fourtrains = []
-for trainthing in updatearray do
-  if trainthing.trip.route_id == "4"
+for trainthing in feed.entity do
+  if trainthing.try(:trip_update).try(:trip).try(:route_id) == "4" || trainthing.vehicle.try(:trip).try(:route_id) == "4"
     fourtrains << trainthing
-  end
-end
-for train in normalarray do
-  if train.vehicle.try(:trip).try(:route_id) == "4"
-    fourtrains << train
   end
 end
 northbound = []
 for singletrain in fourtrains do
     if singletrain.respond_to?(:trip)
-      if singletrain.try(:trip).try(:trip_id).split("..")[1][0]  == "N"
+      if singletrain.trip.trip_id.split("..")[1][0]  == "N"
+        northbound << singletrain
+      end
+    elsif singletrain.respond_to?(:trip_update) && singletrain.trip_update.respond_to?(:trip)
+      if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "N"
         northbound << singletrain
       end
     else
