@@ -15,6 +15,7 @@ class TripsAdapter {
         'Content-Type':'application/json'
       }
     }
+    console.log(tripDeleteParams)
     return fetch(deleteUrl, tripDeleteParams).then(response => response.json())
   }
 
@@ -25,7 +26,6 @@ class TripsAdapter {
         'Content-Type':'application/json'
       },
       body: JSON.stringify({body})
-      // , JSON.stringify({destination})
     }
     console.log(tripCreateParams)
     return fetch(this.baseUrl, tripCreateParams).then(resp => resp.json())

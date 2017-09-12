@@ -10,6 +10,11 @@ class Api::V1::TripsController < ApplicationController
     render json: @trip, status: 201
   end
 
+  def destroy
+    @trip = Trip.findby(params[:id])
+    byebug
+  end
+
   private
   def trip_params
     params.require(:body).permit(:origin, :destination)
