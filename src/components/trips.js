@@ -8,7 +8,8 @@ class Trips {
 
   initBindingsAndEventListeners() {
     this.tripsForm = document.getElementById('new-trip-form')
-    this.tripInput = document.getElementById('new-trip-body')
+    this.tripInputOrigin = document.getElementById('new-trip-origin')
+    this.tripInputDestination = document.getElementById('new-trip-destination')
     this.tripsNode = document.getElementById('trips-container')
     this.tripsForm.addEventListener('submit',this.handleAddTrip.bind(this))
     this.tripsNode.addEventListener('click',this.handleDeleteTrip.bind(this))
@@ -23,11 +24,13 @@ class Trips {
 
   handleAddTrip() {
     event.preventDefault()
-    const body = this.tripInput.value
+    const origin = this.tripInputOrigin.value
+    const destination = this.tripInputDestination.value
     this.adapter.createTrip(origin, destination)
     .then( (tripJSON) => this.trips.push(new Trip(tripJSON)) )
     .then(  this.render.bind(this) )
-    .then( () => this.tripInput.value = '' )
+    .then( () => this.tripInputOrigin.value = '' )
+    .then( () => this.tripInputDestination.value = '' )
   }
 
   handleDeleteTrip() {
