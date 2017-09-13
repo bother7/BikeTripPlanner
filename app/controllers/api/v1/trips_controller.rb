@@ -15,6 +15,8 @@ class Api::V1::TripsController < ApplicationController
     byebug
   end
 
+  
+
   private
   def trip_params
     params.require(:body).permit(:origin, :destination)
