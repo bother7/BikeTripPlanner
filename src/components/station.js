@@ -1,9 +1,11 @@
 class Station {
   constructor(stationJSON) {
+    this.id = stationJSON.id
     this.stop_id = stationJSON.stop_id
     this.name = stationJSON.name
     this.lat = stationJSON.lat
     this.lon = stationJSON.lon
+    this.trains = stationJSON.trains
   }
 
   render() {

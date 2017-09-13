@@ -5,4 +5,6 @@ class Api::V1::StationsController < ApplicationController
     render json: @stations, status: 200
   end
 
+  
+
 end
