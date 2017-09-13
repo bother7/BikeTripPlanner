@@ -6,7 +6,7 @@ require 'net/http'
 require 'byebug'
 
 def self.query(route)
-    data = Net::HTTP.get(URI.parse("http://datamine.mta.info/mta_esi.php?key=&feed_id=1"))
+    data = Net::HTTP.get(URI.parse("http://datamine.mta.info/mta_esi.php?key=261575ac00353ab9c3bbe46c115b1c52&feed_id=1"))
     feed = Transit_realtime::FeedMessage.decode(data)
     selectedtrainline = []
     for trainthing in feed.entity do
