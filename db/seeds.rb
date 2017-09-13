@@ -5,7 +5,7 @@ Trip.create([
 
   require 'csv'
 
-  csv_text = File.read('app/models/stops.csv')
+  csv_text = File.read('./stops.csv')
   csv = CSV.parse(csv_text, :headers => true)
   csv.each do |row|
     Station.create!(row.to_hash)

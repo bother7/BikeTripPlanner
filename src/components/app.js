@@ -1,5 +1,5 @@
 class App {
   constructor() {
-    this.trips = new Trips()
+    this.stations = new Stations()
   }
 }

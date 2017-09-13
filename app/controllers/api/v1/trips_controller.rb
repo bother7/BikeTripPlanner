@@ -12,10 +12,9 @@ class Api::V1::TripsController < ApplicationController
 
   def destroy
     @trip = Trip.findby(params[:id])
-    byebug
   end
 
-  
+
 
   private
   def trip_params
