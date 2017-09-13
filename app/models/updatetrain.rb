@@ -20,31 +20,33 @@ def self.query(route)
         if singletrain.respond_to?(:trip_update) && singletrain.trip_update.respond_to?(:trip)
           if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "N"
             northbound << singletrain
-        elsif
-          if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "S"
-            southbound << singletrain
+          elsif
+            if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "S"
+              southbound << singletrain
+            end
           end
         end
       end
-    end
-    southbound.map do |train|
-      trainid = train.trip_update.trip.trip_id
-      findtrain = Train.find_or_create_by({trip_id: trainid, route: route})
-      train.trip_update.stop_time_update.each do |timeupdate|
-        findstation = Station.find_by({stop_id: timeupdate.stop_id.to_i.to_s})
-        if timeupdate.arrival.respond_to?(:time)
-          esttime = timeupdate.arrival.time
-          trainatstation = Trainatstation.find_or_create_by({train: findtrain, station:findstation})
-          trainatstation.time = Time.at(esttime)
-          trainatstation.save
-        end
+      Updatetrain.createtrainatstations(southbound, "S", route)
+      Updatetrain.createtrainatstations(northbound, "N", route)
+  end
+
+def self.createtrainatstations(direction, str, route)
+  direction.map do |train|
+    trainid = train.trip_update.trip.trip_id
+    findtrain = Train.find_or_create_by({trip_id: trainid, route: route, direction: str})
+    train.trip_update.stop_time_update.each do |timeupdate|
+      findstation = Station.find_by({stop_id: timeupdate.stop_id.to_i.to_s})
+      if timeupdate.arrival.respond_to?(:time)
+        esttime = timeupdate.arrival.time
+        trainatstation = Trainatstation.find_or_create_by({train: findtrain, station:findstation})
+        trainatstation.time = Time.at(esttime)
+        trainatstation.save
       end
     end
-    # trainids = southbound.map {|train| train.trip_update.trip.trip_id}
-    # northbound.each {|train| trainids << train.trip_update.trip.trip_id}
-    # trainids.each do |train|
-    #   Train.find_or_create_by({trip_id: train, route: route})
-    # end
-    # byebug
   end
+end
+
+
+
 end
