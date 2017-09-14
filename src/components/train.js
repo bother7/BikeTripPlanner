@@ -9,7 +9,7 @@ class Train {
   }
 
   render() {
-    return `<li data-tripid='${this.trip_id}' data-props='${JSON.stringify(this)}' class='trip-element'>Train Number: ${this.trip_id} route: ${this.route} ${this.currentlocation}</li>`
+    return `<li data-tripid='${this.trip_id}' data-props='${JSON.stringify(this)}' class='trip-element'>ID: ${this.id} Train Number: ${this.trip_id} route: ${this.route} ${this.currentlocation}</li>`
   }
 
 }
