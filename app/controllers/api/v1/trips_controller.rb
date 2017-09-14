@@ -6,7 +6,9 @@ class Api::V1::TripsController < ApplicationController
   end
 
   def create
+    # You have your request object (params, session, cookies, ...)
     @trip = Trip.create(trip_params)
+    # respond to the request with a new trip object as json and status code ...
     render json: @trip, status: 201
   end
 

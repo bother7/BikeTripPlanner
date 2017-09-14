@@ -9,9 +9,12 @@ def self.query(route)
     data = Net::HTTP.get(URI.parse("http://datamine.mta.info/mta_esi.php?key=261575ac00353ab9c3bbe46c115b1c52&feed_id=1"))
     feed = Transit_realtime::FeedMessage.decode(data)
     selectedtrainline = []
+    currentvehiclestatus = []
     for trainthing in feed.entity do
-      if trainthing.try(:trip_update).try(:trip).try(:route_id) == route || trainthing.vehicle.try(:trip).try(:route_id) == route
+      if trainthing.try(:trip_update).try(:trip).try(:route_id) == route
         selectedtrainline << trainthing
+      elsif trainthing.try(:vehicle).try(:trip).try(:route_id) == route
+        currentvehiclestatus << trainthing
       end
     end
     northbound = []

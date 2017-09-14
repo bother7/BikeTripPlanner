@@ -15,10 +15,24 @@ class Stations {
     .then( stationsJSON => stationsJSON.forEach( station => {
       this.stations.push( new Station(station) )
       var latLng = new google.maps.LatLng(station.lat,station.lon)
-
-      var marker = new google.maps.Marker({position: latLng,map: map})//, label: station.name
-      // marker.addListener("click", function(e) { alert(`${station.name}`) })
-    })).then( this.render.bind(this) ).catch( () => alert('The server does not appear to be running') )
+      var stationcircle = new google.maps.Circle({
+         strokeColor: '#FF0000',
+         strokeOpacity: 0.8,
+         strokeWeight: 2,
+         fillColor: '#FF0000',
+         fillOpacity: 0.35,
+         map: map,
+         center: latLng,
+         radius: 100
+       });
+       var infowindow = new google.maps.InfoWindow({
+         content: `<div> ${station.name} ${station.trains}</div>`,
+         position: latLng
+      });
+       stationcircle.addListener("click", function(){
+         infowindow.open(map, stationcircle)
+       })
+    })).then(this.render.bind(this) ).catch( () => alert('The server does not appear to be running') )
   }
 
   stationsHTML() {
