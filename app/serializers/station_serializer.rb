@@ -1,5 +1,5 @@
 class StationSerializer < ActiveModel::Serializer
-  attributes :stop_id, :lat, :lon, :name, :id, :trains
+  attributes :stop_id, :lat, :lon, :name, :id, :trains, :line
 
   def trains
     if object.trains.size != 0

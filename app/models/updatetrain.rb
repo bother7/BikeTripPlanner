@@ -5,33 +5,36 @@ require 'google/transit/gtfs-realtime.pb'
 require 'net/http'
 require 'byebug'
 
-def self.query(route)
+def self.query()
     data = Net::HTTP.get(URI.parse("http://datamine.mta.info/mta_esi.php?key=261575ac00353ab9c3bbe46c115b1c52&feed_id=1"))
     feed = Transit_realtime::FeedMessage.decode(data)
-    selectedtrainline = []
-    currentvehiclestatus = []
-    for trainthing in feed.entity do
-      if trainthing.try(:trip_update).try(:trip).try(:route_id) == route
-        selectedtrainline << trainthing
-      elsif trainthing.try(:vehicle).try(:trip).try(:route_id) == route
-        currentvehiclestatus << trainthing
+    routearray = ["1","2","3","4","5","6"]
+    for route in routearray do
+      selectedtrainline = []
+      currentvehiclestatus = []
+      for trainthing in feed.entity do
+        if trainthing.try(:trip_update).try(:trip).try(:route_id) == route
+          selectedtrainline << trainthing
+        elsif trainthing.try(:vehicle).try(:trip).try(:route_id) == route
+          currentvehiclestatus << trainthing
+        end
       end
-    end
-    northbound = []
-    southbound = []
-    for singletrain in selectedtrainline do
-        if singletrain.respond_to?(:trip_update) && singletrain.trip_update.respond_to?(:trip)
-          if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "N"
-            northbound << singletrain
-          elsif
-            if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "S"
-              southbound << singletrain
+      northbound = []
+      southbound = []
+      for singletrain in selectedtrainline do
+          if singletrain.respond_to?(:trip_update) && singletrain.trip_update.respond_to?(:trip)
+            if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "N"
+              northbound << singletrain
+            elsif
+              if singletrain.trip_update.trip.trip_id.split("..")[1][0] == "S"
+                southbound << singletrain
+              end
             end
           end
         end
+        Updatetrain.createtrainatstations(southbound, "S", route)
+        Updatetrain.createtrainatstations(northbound, "N", route)
       end
-      Updatetrain.createtrainatstations(southbound, "S", route)
-      Updatetrain.createtrainatstations(northbound, "N", route)
   end
 
 def self.createtrainatstations(direction, str, route)

@@ -4,10 +4,13 @@ class Trains {
     this.initBindingsAndEventListeners()
     this.adapter = new TrainsAdapter()
     this.fetchAndLoadTrains()
+    this.markers = []
   }
 
   initBindingsAndEventListeners() {
     this.trainDiv = document.getElementById("trains-container")
+    this.trainSelect = document.getElementById("train-line")
+    this.trainSelect.addEventListener("change", this.trainMarker.bind(this))
   }
 
   fetchAndLoadTrains() {
@@ -27,7 +30,8 @@ class Trains {
          var marker = new google.maps.Marker({
            position: latLng,
            map: map,
-           icon: image
+           icon: image,
+           info: train.route
          })
          var infowindow = new google.maps.InfoWindow({
            content: `<div> ${train.route} Train - ${train.direction}</div>`,
@@ -36,6 +40,7 @@ class Trains {
          marker.addListener("click", function(){
            infowindow.open(map, marker)
          })
+         this.markers.push(marker)
        }
     })).then( this.render.bind(this) ).catch( () => alert('The server does not appear to be running') )
   }
@@ -47,4 +52,22 @@ class Trains {
   render() {
     this.trainDiv.innerHTML = `<ul>${this.trainsHTML()}</ul>`
   }
+
+  trainMarker(){
+    if (event.target.value === "default") {
+      this.markers.forEach(marker => marker.setMap(map))
+    }
+    else {
+      this.markers.forEach((marker)=>{
+        if (event.target.value === marker.info){
+          marker.setMap(map)
+        }
+        else {
+          marker.setMap(null)
+        }
+      })
+    }
+
+  }
+
 }

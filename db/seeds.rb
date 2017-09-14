@@ -10,3 +10,14 @@ Trip.create([
   csv.each do |row|
     Station.create!(row.to_hash)
   end
+
+  secondcsv_text = File.read('db/stations_with_routes.csv')
+  secondcsv = CSV.parse(secondcsv_text, :headers => true)
+  secondcsv.each do |row|
+    hash = row.to_hash
+    station = Station.where("lon LIKE ?", "#{hash["LONGITUDE"]}%").where("lat LIKE ?", "#{hash["LATITUDE"]}%")[0]
+    if !!station
+      station.line = hash["LINE"]
+      station.save
+    end
+  end

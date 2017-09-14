@@ -6,6 +6,7 @@ class Station {
     this.lat = stationJSON.lat
     this.lon = stationJSON.lon
     this.trains = stationJSON.trains
+    this.line = stationJSON.line
   }
 
   render() {
