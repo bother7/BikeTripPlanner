@@ -37,7 +37,9 @@ class Stations {
          infowindow.open(map, stationcircle)
        })
        this.circles.push(stationcircle)
-    })).then(this.render.bind(this) ).catch( () => alert('The server does not appear to be running') )
+    }))
+    // .then(this.render.bind(this) )
+    .catch( () => alert('The server does not appear to be running') )
   }
 
   stationsHTML() {

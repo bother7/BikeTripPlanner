@@ -42,7 +42,9 @@ class Trains {
          })
          this.markers.push(marker)
        }
-    })).then( this.render.bind(this) ).catch( () => alert('The server does not appear to be running') )
+    }))
+    // .then( this.render.bind(this) )
+    .catch( () => alert('The server does not appear to be running') )
   }
 
   trainsHTML() {

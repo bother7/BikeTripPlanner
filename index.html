@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Station frontend</title>
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" type="text/css" href="styles/style.css"> -->
-    <style>
-    #map {
-   width: 100%;
-   height: 400px;
-   background-color: grey;
-  }
-    </style>
+    <title>Subway Status</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+
   </head>
-  <body>
-    <h1>Train Stations</h1>
-    <p><select name="train-line" id="train-line">
-  <option value="default" selected>Default</option>
-  <option value="1">1 Trains</option>
-  <option value="2">2 Trains</option>
-  <option value="3">3 Trains</option>
-  <option value="4">4 Trains</option>
-  <option value="5">5 Trains</option>
-  <option value="6">6 Trains</option>
-</select> </p>
+
+  <body style="margin:0px">
+  <div class="top" style="width:100%;height:30px;padding:0px;margin;0px;font-family:system-ui;font-size:25px;vertical-align:center"> MTA Train Status</div>
+
+
        <div id="map"></div>
+         <div class="top" style="width:100%;height:30px;padding:0px;margin;0px;font-family:system-ui;font-size:25px;vertical-align:center">
+           <select name="train-line" id="train-line">
+         <option value="default" selected>Default</option>
+         <option value="1">1 Trains</option>
+         <option value="2">2 Trains</option>
+         <option value="3">3 Trains</option>
+         <option value="4">4 Trains</option>
+         <option value="5">5 Trains</option>
+         <option value="6">6 Trains</option>
+       </select>
+         </div>
       <div id="stations-container">
       </div>
 
