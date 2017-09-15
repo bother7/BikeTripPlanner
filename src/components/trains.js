@@ -34,7 +34,7 @@ class Trains {
            info: train.route
          })
          var infowindow = new google.maps.InfoWindow({
-           content: `<div> ${train.route} Train - ${train.direction}</div>`,
+           content: `<div> ${train.route} Train - ${train.direction} <ul>${train.history}</ul></div>`,
            position: latLng
         });
          marker.addListener("click", function(){

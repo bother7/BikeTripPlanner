@@ -30,7 +30,7 @@ class Stations {
          info: station.line
        });
        var infowindow = new google.maps.InfoWindow({
-         content: `<div> ${station.name} ${station.trains}</div>`,
+         content: `<div> ${station.name}</div>`,
          position: latLng
       });
        stationcircle.addListener("click", function(){

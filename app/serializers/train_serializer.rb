@@ -1,5 +1,17 @@
 class TrainSerializer < ActiveModel::Serializer
-  attributes :id, :trip_id, :route, :direction, :delay, :currentlocation
+  attributes :id, :trip_id, :route, :direction, :delay, :currentlocation, :history
+
+  def history
+    if object.trainatstations.where({time: (Time.now - 10.minutes)..(Time.now + 10.minutes)}).size != 0
+      array = object.trainatstations.where({time: (Time.now - 10.minutes)..(Time.now + 10.minutes)})
+      x = array.map do |trainatstation|
+        "<li>#{trainatstation.time.localtime("-04:00").strftime("%H:%M:%S")} - #{trainatstation.station.name}</li>"
+      end.join("")
+    else
+      x =""
+    end
+    x
+  end
 
   def currentlocation
     origincheck = 0

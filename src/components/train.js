@@ -6,6 +6,7 @@ class Train {
     this.direction = trainJSON.direction
     this.delay = trainJSON.delay
     this.currentlocation = trainJSON.currentlocation
+    this.history = trainJSON.history
   }
 
   render() {
