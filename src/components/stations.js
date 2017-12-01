@@ -11,6 +11,8 @@ class Stations {
     this.stationDiv = document.getElementById("stations-container")
     this.circleSelect = document.getElementById("train-line")
     this.circleSelect.addEventListener("change", this.stationCircles.bind(this))
+    this.favStationSelect = document.getElementById("fav-station")
+    this.favStationSelect.addEventListener("change", this.userStation.bind(this))
   }
 
   fetchAndLoadStations() {
@@ -27,7 +29,8 @@ class Stations {
          map: map,
          center: latLng,
          radius: 100,
-         info: station.line
+         info: station.line,
+         name: station.name
        });
        var infowindow = new google.maps.InfoWindow({
          content: `<div> ${station.name}</div>`,
@@ -37,8 +40,13 @@ class Stations {
          infowindow.open(map, stationcircle)
        })
        this.circles.push(stationcircle)
+       let option = document.createElement("option")
+       option.value = this.stations[this.stations.length - 1].name
+       option.innerText = this.stations[this.stations.length - 1].name
+       this.favStationSelect.appendChild(option)
     }))
     // .then(this.render.bind(this) )
+    .then()
     .catch( () => alert('The server does not appear to be running') )
   }
 
@@ -65,5 +73,14 @@ class Stations {
       })
     }
 
+  }
+
+  userStation(){
+    var favCircle = this.circles.find(circle => circle.name === event.target.value)
+    favCircle.fillColor = '#008000'
+    favCircle.radius = 300
+    favCircle.setMap(null)
+    favCircle.setMap(map)
+    
   }
 }

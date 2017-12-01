@@ -1,7 +1,7 @@
 class App {
   constructor() {
-    // this.stations = new Stations()
-    // this.trains = new Trains()
+    this.stations = new Stations()
+    this.trains = new Trains()
     this.userAdapter = new UsersAdapter()
     this.handleUserLogin()
   }
